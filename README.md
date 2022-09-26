@@ -11,3 +11,11 @@ While it is possible to time yourself using a stopwatch (or stopwatch app), it i
 Cube timers are, in essence, souped-up stopwatches which record every time that they measure. They can also contain helpful features such as scramble generation and data visualizations.
 
 There exist several cubing timers, but none are perfect in my opinion. I have been meaning to design my own for a while now, and I believe that I can do so while fulfilling the requirements of the term project.
+
+## User Stories
+
+- As a user, I want to be able to time a solve and add it a list of solves 
+- As a user, I want to receive directions on how to scramble my cube in a fair and random manner
+- As a user, I want to know my average solve time at any given moment
+- As a user, I want to keep track of my fastest solve time
+- As a user, I want to be able to delete a solve from a list of solves, or clear the entire list
