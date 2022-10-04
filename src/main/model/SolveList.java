@@ -36,10 +36,10 @@ public class SolveList {
     // effects: returns a String representation of up to n of the most recent solves
     public String listLatestSolves(int n) {
         StringBuilder output = new StringBuilder();
-        int lastSolveIndex = Math.max(solveList.size() - n, 0); // if n is too large, return as many solves as possible
-        for (int i = solveList.size() - 1; i >= lastSolveIndex; i--) {
-            output.append("[").append(i + 1).append("] ");
-            output.append(solveList.get(i).getSolveTime());
+        List<Solve> lastNSolves = getLatestSolves(n);
+        for (Solve solve : lastNSolves) {
+            output.append("[").append(solveList.lastIndexOf(solve) + 1).append("] ");
+            output.append(solve.getSolveTime());
             output.append("\n");
         }
         return output.toString().trim();
@@ -47,5 +47,16 @@ public class SolveList {
 
     public List<Solve> getSolveList() {
         return solveList;
+    }
+
+    // requires: 0 <= n
+    // effects: returns last n solves in reverse order. If n > solveList.size(), produce solveList reversed
+    private List<Solve> getLatestSolves(int n) {
+        List<Solve> output = new ArrayList<Solve>();
+        int lastSolveIndex = Math.max(solveList.size() - n, 0); // if n is too large, return all solves
+        for (int i = solveList.size() - 1; i >= lastSolveIndex; i--) {
+            output.add(solveList.get(i));
+        }
+        return output;
     }
 }

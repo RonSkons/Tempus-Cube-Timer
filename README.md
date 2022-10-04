@@ -14,7 +14,7 @@ There exist several cubing timers, but none are perfect in my opinion. I have be
 
 ## User Stories
 
-- As a user, I want to be able to time a solve and add it a list of solves 
+- As a user, I want to be able to time multiple solves and add them to a list of solves 
 - As a user, I want to receive directions on how to scramble my cube in a fair and random manner
 - As a user, I want to know my average solve time at any given moment
 - As a user, I want to keep track of my fastest solve time
