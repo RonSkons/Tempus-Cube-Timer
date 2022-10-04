@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 // Represents a list of Solves, and provides common operations involving them
@@ -45,6 +46,24 @@ public class SolveList {
         return output.toString().trim();
     }
 
+    // requires: 3 <= n <= solveList.size()
+    // effects: returns the mean of the last n solves, ignoring the fastest and slowest ones
+    public double currentAverageOfN(int n) {
+        List<Solve> lastFive = getLatestSolves(n);
+        Solve max = Collections.max(lastFive, Comparator.comparing(Solve::getSolveTime));
+        Solve min = Collections.min(lastFive, Comparator.comparing(Solve::getSolveTime));
+        lastFive.remove(max);
+        lastFive.remove(min);
+        double sum = lastFive.stream().mapToDouble(Solve::getSolveTime).sum();
+        return sum / (n - 2);
+    }
+
+    // requires: solveList is not empty
+    // effects: returns the fastest solve in solveList
+    public Solve currentFastestSolve() {
+        return Collections.min(solveList, Comparator.comparing(Solve::getSolveTime));
+    }
+
     public List<Solve> getSolveList() {
         return solveList;
     }
@@ -52,7 +71,7 @@ public class SolveList {
     // requires: 0 <= n
     // effects: returns last n solves in reverse order. If n > solveList.size(), produce solveList reversed
     private List<Solve> getLatestSolves(int n) {
-        List<Solve> output = new ArrayList<Solve>();
+        List<Solve> output = new ArrayList<>();
         int lastSolveIndex = Math.max(solveList.size() - n, 0); // if n is too large, return all solves
         for (int i = solveList.size() - 1; i >= lastSolveIndex; i--) {
             output.add(solveList.get(i));
