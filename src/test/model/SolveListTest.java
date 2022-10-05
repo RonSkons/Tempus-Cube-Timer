@@ -137,6 +137,21 @@ public class SolveListTest {
     }
 
     @Test
+    public void testCurrentSessionMeanOne() {
+        solveList.add(s1);
+        assertEquals(s1.getSolveTime(), solveList.currentSessionMean());
+    }
+
+    @Test
+    public void testCurrentSessionMeanMultiple() {
+        solveList.add(s1);
+        solveList.add(s2);
+        solveList.add(s3);
+        assertEquals((s1.getSolveTime() + s2.getSolveTime() + s3.getSolveTime()) / 3,
+                solveList.currentSessionMean());
+    }
+
+    @Test
     public void testCurrentFastestSolve() {
         solveList.add(s1);
         solveList.add(s2);
