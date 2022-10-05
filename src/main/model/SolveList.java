@@ -59,6 +59,13 @@ public class SolveList {
     }
 
     // requires: solveList is not empty
+    // effects: returns the mean of all solve times in solveList
+    public double currentSessionMean() {
+        double sum = solveList.stream().mapToDouble(Solve::getSolveTime).sum();
+        return sum / solveList.size();
+    }
+
+    // requires: solveList is not empty
     // effects: returns the fastest solve in solveList
     public Solve currentFastestSolve() {
         return Collections.min(solveList, Comparator.comparing(Solve::getSolveTime));

@@ -121,7 +121,7 @@ public class SolveListTest {
         solveList.add(s3);
         solveList.add(fastSolve);
         solveList.add(slowSolve);
-        assertEquals((s1.getSolveTime() + s2.getSolveTime() + s3.getSolveTime())/3,
+        assertEquals((s1.getSolveTime() + s2.getSolveTime() + s3.getSolveTime()) / 3,
                 solveList.currentAverageOfN(5));
     }
 

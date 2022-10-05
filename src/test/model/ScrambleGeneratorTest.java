@@ -45,12 +45,12 @@ class ScrambleGeneratorTest {
     }
 
     @Test
-    public void testToStringEmptyScramble(){
+    public void testToStringEmptyScramble() {
         assertEquals("", scrambler.toString());
     }
 
     @Test
-    public void testToStringShortScramble(){
+    public void testToStringShortScramble() {
         scrambler.generateScramble(1);
         String stringified = scrambler.toString();
         // String representation of a single move shouldn't exceed 2 chars
@@ -58,7 +58,7 @@ class ScrambleGeneratorTest {
     }
 
     @Test
-    public void testToStringLongScramble(){
+    public void testToStringLongScramble() {
         scrambler.generateScramble(45);
         String stringified = scrambler.toString();
         String[] split = stringified.split(" ");
