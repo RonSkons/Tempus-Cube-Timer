@@ -8,13 +8,11 @@ import java.util.Scanner;
 
 // Cube timer application
 public class CubeTimer {
-    public static final int SCRAMBLE_LEN = 20;
+    private static final int SCRAMBLE_LEN = 20;
 
     private SolveList solves;
     private ScrambleGenerator scrambler;
     private Scanner in;
-    private long startTime;
-    private long stopTime;
 
     // effects: constructs a CubeTimer
     public CubeTimer() {
@@ -24,6 +22,8 @@ public class CubeTimer {
         runCubeTimer();
     }
 
+    @SuppressWarnings("methodlength") // !!! ASK TA
+    // the main program loop. Shows the main menu until user quits out.
     private void runCubeTimer() {
         boolean loop = true;
         String command;
@@ -41,6 +41,15 @@ public class CubeTimer {
                 case "s":
                     showStatistics();
                     break;
+                case "a":
+                    addTime();
+                    break;
+                case "d":
+                    deleteSolve();
+                    break;
+                case "c":
+                    clearSolves();
+                    break;
                 case "q":
                     shutdown();
                     loop = false;
@@ -51,6 +60,7 @@ public class CubeTimer {
         }
     }
 
+    // modifies: this
     // effects: generates a new scramble, and prints it
     private void showScramble() {
         scrambler.generateScramble(SCRAMBLE_LEN);
@@ -76,7 +86,9 @@ public class CubeTimer {
         System.out.println("Total solves: " + solveCount);
 
         if (solveCount > 0) {
-            System.out.println("Fastest time: " + solves.currentFastestSolve().getSolveTime());
+            Solve fastest = solves.currentFastestSolve();
+            System.out.println("Fastest time: " + fastest.getSolveTime());
+            System.out.println("Fastest time scramble: " + fastest.getScrambleString());
             System.out.println("Session mean: " + solves.currentSessionMean());
         }
 
@@ -93,17 +105,64 @@ public class CubeTimer {
         }
     }
 
+    // modifies: this
+    // effects: allows the user to add a time manually
+    private void addTime() {
+        System.out.println("Enter time to add, or (c)ancel.");
+        try {
+            double time = in.nextDouble();
+            if (time > 0) {
+                solves.add(new Solve(time));
+            } else {
+                System.out.println("Times must be positive. You're not that fast!");
+            }
+        } catch (Exception e) { // User didn't enter a double; don't add anything.
+            System.out.println("No time added.");
+        }
+        in.nextLine();
+    }
+
+    // modifies: this
+    // effects: allows the user to remove a time, if it exists
+    private void deleteSolve() {
+        showSolveList();
+        System.out.println("Enter number of the solve you would like to delete, or (c)ancel.");
+        try {
+            int index = in.nextInt();
+            if (0 < index && index <= solves.getSolveList().size()) {
+                solves.remove(index - 1);
+            } else {
+                System.out.println("Solve " + index + " does not exist.");
+            }
+        } catch (Exception e) { // User didn't enter an int; don't add anything.
+            System.out.println("No solve deleted.");
+        }
+        in.nextLine();
+    }
+
+    // modifies: this
+    // effects: double-check that user wants to clear solve list. If true, do so.
+    private void clearSolves() {
+        System.out.println("Are you sure you want to delete ALL saved solves? (y/n)");
+        String response = in.nextLine().toLowerCase();
+        if (response.equals("y")) {
+            solves.clear();
+            System.out.println("Cleared all solves.");
+        }
+    }
+
     // effects: Runs before program termination. Code to save state will go here eventually(?)
     private void shutdown() {
         System.out.println("Goodbye!");
     }
 
+    // modifies: this
     // effects: times a solve and records the result
     private void timeSolve() {
-        startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         System.out.println("Timing, press ENTER when done.");
         in.nextLine(); // Wait until user presses enter again
-        stopTime = System.currentTimeMillis();
+        long stopTime = System.currentTimeMillis();
 
         long difference = stopTime - startTime;
         double solveTime = difference / 1_000d;
