@@ -22,7 +22,6 @@ public class CubeTimer {
         runCubeTimer();
     }
 
-    @SuppressWarnings("methodlength") // !!! ASK TA
     // the main program loop. Shows the main menu until user quits out.
     private void runCubeTimer() {
         boolean loop = true;
@@ -34,29 +33,35 @@ public class CubeTimer {
             showScramble();
             showMenu();
             command = in.nextLine().toLowerCase();
-            switch (command) {
-                case "l":
-                    showSolveList();
-                    break;
-                case "s":
-                    showStatistics();
-                    break;
-                case "a":
-                    addTime();
-                    break;
-                case "d":
-                    deleteSolve();
-                    break;
-                case "c":
-                    clearSolves();
-                    break;
-                case "q":
-                    shutdown();
-                    loop = false;
-                    break;
-                default:
-                    timeSolve();
+            if (command.equals("q")) {
+                shutdown();
+                loop = false;
+            } else {
+                handleCommand(command);
             }
+        }
+    }
+
+    // effects: Handles a command
+    private void handleCommand(String command) {
+        switch (command) {
+            case "l":
+                showSolveList();
+                break;
+            case "s":
+                showStatistics();
+                break;
+            case "a":
+                addTime();
+                break;
+            case "d":
+                deleteSolve();
+                break;
+            case "c":
+                clearSolves();
+                break;
+            default:
+                timeSolve();
         }
     }
 
@@ -126,7 +131,7 @@ public class CubeTimer {
     // effects: allows the user to remove a time, if it exists
     private void deleteSolve() {
         showSolveList();
-        System.out.println("Enter number of the solve you would like to delete, or (c)ancel.");
+        System.out.println("Enter the number of the solve you would like to delete, or (c)ancel.");
         try {
             int index = in.nextInt();
             if (0 < index && index <= solves.getSolveList().size()) {
