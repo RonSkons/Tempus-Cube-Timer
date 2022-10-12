@@ -5,15 +5,15 @@ public class Solve {
     private double solveTime;
     private String scrambleString;
 
-    // requires: seconds > 0
-    // effects: constructs a Solve with given time (in seconds) and empty scramble string
+    // REQUIRES: seconds > 0
+    // EFFECTS: constructs a Solve with given time (in seconds) and empty scramble string
     public Solve(double solveTime) {
         this.solveTime = solveTime;
         scrambleString = "Unspecified Scramble";
     }
 
-    // requires: seconds > 0
-    // effects: constructs a Solve with given time (in seconds) and scramble string
+    // REQUIRES: seconds > 0
+    // EFFECTS: constructs a Solve with given time (in seconds) and scramble string
     public Solve(double solveTime, String scrambleString) {
         this.solveTime = solveTime;
         this.scrambleString = scrambleString;

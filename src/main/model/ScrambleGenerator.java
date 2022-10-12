@@ -19,15 +19,15 @@ public class ScrambleGenerator {
     private List<String> currentScramble;
     private Random rand;
 
-    // effects: constructs a new ScrambleGenerator
+    // EFFECTS: constructs a new ScrambleGenerator
     public ScrambleGenerator() {
         currentScramble = new ArrayList<>();
         rand = new Random();
     }
 
-    // requires: scrambleLength > 0
-    // modifies: this
-    // effects: stores a sequence of random meaningful moves in currentScramble of length scrambleLength
+    // REQUIRES: scrambleLength > 0
+    // MODIFIES: this
+    // EFFECTS: stores a sequence of random meaningful moves in currentScramble of length scrambleLength
     public void generateScramble(int scrambleLength) {
         currentScramble.clear();
         String previousMove = " ";
@@ -41,7 +41,7 @@ public class ScrambleGenerator {
         }
     }
 
-    // effects: returns a string representation of currentScramble
+    // EFFECTS: returns a string representation of currentScramble
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();

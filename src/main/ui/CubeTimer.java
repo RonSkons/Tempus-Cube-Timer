@@ -14,7 +14,7 @@ public class CubeTimer {
     private ScrambleGenerator scrambler;
     private Scanner in;
 
-    // effects: constructs a CubeTimer
+    // EFFECTS: constructs a CubeTimer
     public CubeTimer() {
         solves = new SolveList();
         scrambler = new ScrambleGenerator();
@@ -42,7 +42,7 @@ public class CubeTimer {
         }
     }
 
-    // effects: Handles a command
+    // EFFECTS: Handles a command
     private void handleCommand(String command) {
         switch (command) {
             case "l":
@@ -65,27 +65,27 @@ public class CubeTimer {
         }
     }
 
-    // modifies: this
-    // effects: generates a new scramble, and prints it
+    // MODIFIES: this
+    // EFFECTS: generates a new scramble, and prints it
     private void showScramble() {
         scrambler.generateScramble(SCRAMBLE_LEN);
         System.out.println("Next Scramble: " + scrambler.toString());
     }
 
-    // effects: Prints a menu with options
+    // EFFECTS: Prints a menu with options
     private void showMenu() {
         System.out.println("(L)ist solves, view (s)tats, (a)dd, (d)elete, or (c)lear solves, or (q)uit");
         System.out.println("Press ENTER to start timer!");
     }
 
-    // effects: prints a list of all solve times
+    // EFFECTS: prints a list of all solve times
     private void showSolveList() {
         int solveCount = solves.getSolveList().size();
         System.out.println(solveCount + " solves on record:");
         System.out.println(solves.listLatestSolves(solveCount));
     }
 
-    // effects: shows relevant averages and personal best
+    // EFFECTS: shows relevant averages and personal best
     private void showStatistics() {
         int solveCount = solves.getSolveList().size();
         System.out.println("Total solves: " + solveCount);
@@ -110,8 +110,8 @@ public class CubeTimer {
         }
     }
 
-    // modifies: this
-    // effects: allows the user to add a time manually
+    // MODIFIES: this
+    // EFFECTS: allows the user to add a time manually
     private void addTime() {
         System.out.println("Enter time to add, or (c)ancel.");
         try {
@@ -127,8 +127,8 @@ public class CubeTimer {
         in.nextLine();
     }
 
-    // modifies: this
-    // effects: allows the user to remove a time, if it exists
+    // MODIFIES: this
+    // EFFECTS: allows the user to remove a time, if it exists
     private void deleteSolve() {
         showSolveList();
         System.out.println("Enter the number of the solve you would like to delete, or (c)ancel.");
@@ -145,8 +145,8 @@ public class CubeTimer {
         in.nextLine();
     }
 
-    // modifies: this
-    // effects: double-check that user wants to clear solve list. If true, do so.
+    // MODIFIES: this
+    // EFFECTS: double-check that user wants to clear solve list. If true, do so.
     private void clearSolves() {
         System.out.println("Are you sure you want to delete ALL saved solves? (y/n)");
         String response = in.nextLine().toLowerCase();
@@ -156,13 +156,13 @@ public class CubeTimer {
         }
     }
 
-    // effects: Runs before program termination. Code to save state will go here eventually(?)
+    // EFFECTS: Runs before program termination. Code to save state will go here eventually(?)
     private void shutdown() {
         System.out.println("Goodbye!");
     }
 
-    // modifies: this
-    // effects: times a solve and records the result
+    // MODIFIES: this
+    // EFFECTS: times a solve and records the result
     private void timeSolve() {
         long startTime = System.currentTimeMillis();
         System.out.println("Timing, press ENTER when done.");
