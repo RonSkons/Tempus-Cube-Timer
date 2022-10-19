@@ -19,3 +19,5 @@ There exist several cubing timers, but none are perfect in my opinion. I have be
 - As a user, I want to know my average solve time at any given moment
 - As a user, I want to keep track of my fastest solve time
 - As a user, I want to be able to delete a solve from a list of solves, or clear the entire list
+- As a user, I want to be able to save my list of times when I quit the application
+- As a user, I want my previously saved times to be present when I re-open the application

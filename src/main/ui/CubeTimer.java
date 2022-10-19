@@ -170,7 +170,7 @@ public class CubeTimer {
         long stopTime = System.currentTimeMillis();
 
         long difference = stopTime - startTime;
-        double solveTime = difference / 1_000d;
+        double solveTime = difference / 1_000d; // Convert from ms to s
 
         System.out.println(solveTime);
         solves.add(new Solve(solveTime, scrambler.toString()));
