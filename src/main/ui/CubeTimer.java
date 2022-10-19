@@ -3,42 +3,65 @@ package ui;
 import model.ScrambleGenerator;
 import model.Solve;
 import model.SolveList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Cube timer application
 public class CubeTimer {
     private static final int SCRAMBLE_LEN = 20;
+    private static final String saveLocation = "./data/solveData.txt";
 
     private SolveList solves;
     private ScrambleGenerator scrambler;
     private Scanner in;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: constructs a CubeTimer
     public CubeTimer() {
         solves = new SolveList();
         scrambler = new ScrambleGenerator();
         in = new Scanner(System.in);
+        jsonWriter = new JsonWriter(saveLocation);
+        jsonReader = new JsonReader(saveLocation);
         runCubeTimer();
     }
 
-    // the main program loop. Shows the main menu until user quits out.
+    // EFFECTS: the main program loop. Shows the main menu until user quits out.
     private void runCubeTimer() {
         boolean loop = true;
         String command;
 
         System.out.println("Tempus Cube Timer");
+        loadSaveData();
         while (loop) {
             System.out.println("=================");
             showScramble();
             showMenu();
             command = in.nextLine().toLowerCase();
             if (command.equals("q")) {
-                shutdown();
+                saveAndQuit();
                 loop = false;
             } else {
                 handleCommand(command);
             }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: if there is a saved SolveList, load it into solves
+    private void loadSaveData() {
+        try {
+            solves = jsonReader.getSavedData();
+            System.out.println("Loaded " + solves.getSolveList().size() + " past solves.");
+        } catch (IOException e) {
+            // Save not found, that's okay.
+            // It will be created when the user quits out.
+            System.out.println("No saved data on record.");
         }
     }
 
@@ -74,7 +97,7 @@ public class CubeTimer {
 
     // EFFECTS: Prints a menu with options
     private void showMenu() {
-        System.out.println("(L)ist solves, view (s)tats, (a)dd, (d)elete, or (c)lear solves, or (q)uit");
+        System.out.println("(L)ist solves, view (s)tats, (a)dd, (d)elete, or (c)lear solves, or save and (q)uit");
         System.out.println("Press ENTER to start timer!");
     }
 
@@ -156,9 +179,18 @@ public class CubeTimer {
         }
     }
 
-    // EFFECTS: Runs before program termination. Code to save state will go here eventually(?)
-    private void shutdown() {
-        System.out.println("Goodbye!");
+    // MODIFIES: this
+    // EFFECTS: Saves the list of solves to data and quits out
+    private void saveAndQuit() {
+        try {
+            jsonWriter.open();
+            jsonWriter.writeSolveList(solves);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error writing to " + saveLocation);
+        } finally {
+            System.out.println("Goodbye!");
+        }
     }
 
     // MODIFIES: this

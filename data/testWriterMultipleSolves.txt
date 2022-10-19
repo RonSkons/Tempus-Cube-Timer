@@ -1,0 +1,14 @@
+[
+    {
+        "time": 12.4,
+        "scramble": "R2 D2"
+    },
+    {
+        "time": 10.12,
+        "scramble": "F' D L2 R' B"
+    },
+    {
+        "time": 8.63,
+        "scramble": "Unspecified Scramble"
+    }
+]

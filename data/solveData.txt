@@ -1,0 +1,14 @@
+[
+    {
+        "time": 5.302,
+        "scramble": "D' L R2 F2 U B' R2 D' U2 D2 B' U2 R L2 D2 U R B2 D' B"
+    },
+    {
+        "time": 4.399,
+        "scramble": "B' R' D L R' L D' F U' F' L2 F U2 L F2 R2 U B2 U2 R'"
+    },
+    {
+        "time": 2.152,
+        "scramble": "R2 D2 B' U L B' L D' F' L2 R B2 L' U2 L' U' R2 D' B' U"
+    }
+]

@@ -1,0 +1,4 @@
+[{
+    "time": 5.302,
+    "scramble": "D' L R2 F2 U B' R2 D' U2 D2 B' U2 R L2 D2 U R B2 D' B"
+}]
