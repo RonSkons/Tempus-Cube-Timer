@@ -3,8 +3,8 @@ package ui;
 import model.ScrambleGenerator;
 import model.Solve;
 import model.SolveList;
-import persistence.JsonReader;
-import persistence.JsonWriter;
+import persistence.SolveListJsonReader;
+import persistence.SolveListJsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,16 +18,16 @@ public class CubeTimer {
     private SolveList solves;
     private ScrambleGenerator scrambler;
     private Scanner in;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private SolveListJsonWriter jsonWriter;
+    private SolveListJsonReader jsonReader;
 
     // EFFECTS: constructs a CubeTimer
     public CubeTimer() {
         solves = new SolveList();
         scrambler = new ScrambleGenerator();
         in = new Scanner(System.in);
-        jsonWriter = new JsonWriter(saveLocation);
-        jsonReader = new JsonReader(saveLocation);
+        jsonWriter = new SolveListJsonWriter(saveLocation);
+        jsonReader = new SolveListJsonReader(saveLocation);
         runCubeTimer();
     }
 

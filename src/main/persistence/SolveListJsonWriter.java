@@ -5,19 +5,18 @@ import model.SolveList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 // Writes a SolveList to JSON file
-public class JsonWriter {
+public class SolveListJsonWriter {
     private static final int TAB = 4; // Indentation level for JSON pretty-printing
 
     private String location;
     private PrintWriter writer;
 
     // EFFECTS: Constructs a JsonWriter with given target
-    public JsonWriter(String location) {
+    public SolveListJsonWriter(String location) {
         this.location = location;
     }
 

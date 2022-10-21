@@ -12,11 +12,11 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 // Parses JSON data from files to SolveList objects
-public class JsonReader {
+public class SolveListJsonReader {
     private String location;
 
     // EFFECTS: constructs a JSON reader with given JSON file
-    public JsonReader(String location) {
+    public SolveListJsonReader(String location) {
         this.location = location;
     }
 

@@ -10,12 +10,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class JsonReaderTest {
+public class SolveListJsonReaderTest {
 
     // Based on code from JsonSerializationDemo
     @Test
     public void testGetSavedDataNoSuchFile() {
-        JsonReader reader = new JsonReader("./data/foobar.txt");
+        SolveListJsonReader reader = new SolveListJsonReader("./data/foobar.txt");
         try {
             SolveList sl = reader.getSavedData();
             fail("IOException expected");
@@ -26,7 +26,7 @@ public class JsonReaderTest {
 
     @Test
     public void testGetSavedDataNoSolves() {
-        JsonReader reader = new JsonReader("./data/testReaderNoSolves.txt");
+        SolveListJsonReader reader = new SolveListJsonReader("./data/testReaderNoSolves.txt");
         try {
             List<Solve> sl = reader.getSavedData().getSolveList();
             assertEquals(0, sl.size());
@@ -37,7 +37,7 @@ public class JsonReaderTest {
 
     @Test
     public void testGetSavedDataOneSolve() {
-        JsonReader reader = new JsonReader("./data/testReaderOneSolve.txt");
+        SolveListJsonReader reader = new SolveListJsonReader("./data/testReaderOneSolve.txt");
         try {
             List<Solve> sl = reader.getSavedData().getSolveList();
             assertEquals(1, sl.size());
@@ -51,7 +51,7 @@ public class JsonReaderTest {
 
     @Test
     public void testGetSavedDataMultipleSolves() {
-        JsonReader reader = new JsonReader("./data/testReaderMultipleSolves.txt");
+        SolveListJsonReader reader = new SolveListJsonReader("./data/testReaderMultipleSolves.txt");
         try {
             List<Solve> sl = reader.getSavedData().getSolveList();
             assertEquals(4, sl.size());

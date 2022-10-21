@@ -11,14 +11,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class JsonWriterTest {
+public class SolveListJsonWriterTest {
 
     // Based on code from JsonSerializationDemo
     @Test
     void testWriterInvalidFile() {
         try {
             SolveList solveList = new SolveList();
-            JsonWriter writer = new JsonWriter("./data/my\0illegal:fileName.json");
+            SolveListJsonWriter writer = new SolveListJsonWriter("./data/my\0illegal:fileName.json");
             writer.open();
             fail("FileNotFoundException was expected");
         } catch (FileNotFoundException e) {
@@ -29,13 +29,13 @@ public class JsonWriterTest {
     @Test
     public void testWriteSolveListNoSolves() {
         try {
-            JsonWriter writer = new JsonWriter("./data/testWriterNoSolves.txt");
+            SolveListJsonWriter writer = new SolveListJsonWriter("./data/testWriterNoSolves.txt");
             SolveList solveList = new SolveList();
             writer.open();
             writer.writeSolveList(solveList);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterNoSolves.txt");
+            SolveListJsonReader reader = new SolveListJsonReader("./data/testWriterNoSolves.txt");
             List<Solve> sl = reader.getSavedData().getSolveList();
             assertEquals(0, sl.size());
         } catch (IOException e) {
@@ -46,14 +46,14 @@ public class JsonWriterTest {
     @Test
     public void testWriteSolveListOneSolve() {
         try {
-            JsonWriter writer = new JsonWriter("./data/testWriterOneSolve.txt");
+            SolveListJsonWriter writer = new SolveListJsonWriter("./data/testWriterOneSolve.txt");
             SolveList solveList = new SolveList();
             solveList.add(new Solve(12.4, "R2 D2"));
             writer.open();
             writer.writeSolveList(solveList);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterOneSolve.txt");
+            SolveListJsonReader reader = new SolveListJsonReader("./data/testWriterOneSolve.txt");
             List<Solve> sl = reader.getSavedData().getSolveList();
             assertEquals(1, sl.size());
             assertEquals(12.4, sl.get(0).getSolveTime());
@@ -67,7 +67,7 @@ public class JsonWriterTest {
     @Test
     public void testWriteSolveListMultipleSolves() {
         try {
-            JsonWriter writer = new JsonWriter("./data/testWriterMultipleSolves.txt");
+            SolveListJsonWriter writer = new SolveListJsonWriter("./data/testWriterMultipleSolves.txt");
             SolveList solveList = new SolveList();
             solveList.add(new Solve(12.4, "R2 D2"));
             solveList.add(new Solve(10.12, "F' D L2 R' B"));
@@ -76,7 +76,7 @@ public class JsonWriterTest {
             writer.writeSolveList(solveList);
             writer.close();
 
-            JsonReader reader = new JsonReader("./data/testWriterMultipleSolves.txt");
+            SolveListJsonReader reader = new SolveListJsonReader("./data/testWriterMultipleSolves.txt");
             List<Solve> sl = reader.getSavedData().getSolveList();
             assertEquals(3, sl.size());
 
