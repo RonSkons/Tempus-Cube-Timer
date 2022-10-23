@@ -6,5 +6,9 @@
     {
         "time": 12.208,
         "scramble": "R L2 R' U2 B2 F2 R2 B R' B' D' B2 F' B' U F B2 L F D'"
+    },
+    {
+        "time": 12,
+        "scramble": "Unspecified Scramble"
     }
 ]

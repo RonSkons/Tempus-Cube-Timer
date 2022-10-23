@@ -53,14 +53,20 @@ public class CubeTimer {
     }
 
     // MODIFIES: this
-    // EFFECTS: if there is a saved SolveList, load it into solves
+    // EFFECTS: if there is a saved SolveList, give user option to load it into solves
     private void loadSaveData() {
         try {
-            solves = jsonReader.getSavedData();
-            System.out.println("Loaded " + solves.getSolveList().size() + " past solves.");
+            System.out.println("Load saved solve list? (y/n)");
+            String response = in.nextLine().toLowerCase();
+            if (!response.equals("n")) {
+                solves = jsonReader.getSavedData();
+                System.out.println("Loaded " + solves.getSolveList().size() + " solves.");
+            } else {
+                System.out.println("Ignored saved data. A fresh start!");
+            }
         } catch (IOException e) {
             // Save not found, that's okay.
-            // It will be created when the user quits out.
+            // It will be created the next time the user saves.
             System.out.println("No saved data on record.");
         }
     }
@@ -97,7 +103,7 @@ public class CubeTimer {
 
     // EFFECTS: Prints a menu with options
     private void showMenu() {
-        System.out.println("(L)ist solves, view (s)tats, (a)dd, (d)elete, or (c)lear solves, or save and (q)uit");
+        System.out.println("(L)ist solves, view (s)tats, (a)dd, (d)elete, or (c)lear solves, or (q)uit");
         System.out.println("Press ENTER to start timer!");
     }
 
@@ -182,15 +188,21 @@ public class CubeTimer {
     // MODIFIES: this
     // EFFECTS: Saves the list of solves to data and quits out
     private void saveAndQuit() {
-        try {
-            jsonWriter.open();
-            jsonWriter.writeSolveList(solves);
-            jsonWriter.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Error writing to " + saveLocation);
-        } finally {
-            System.out.println("Goodbye!");
+        System.out.println("Save changes to solve list? (y/n)");
+        String response = in.nextLine().toLowerCase();
+        if (!response.equals("n")) {
+            try {
+                jsonWriter.open();
+                jsonWriter.writeSolveList(solves);
+                jsonWriter.close();
+                System.out.println("Solve list saved.");
+            } catch (FileNotFoundException e) {
+                System.out.println("Error writing to " + saveLocation);
+            }
+        } else {
+            System.out.println("Some things are better left unsaved.");
         }
+        System.out.println("Goodbye!");
     }
 
     // MODIFIES: this
