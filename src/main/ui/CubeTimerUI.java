@@ -14,11 +14,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-// Cube timer application with GUI TODO ADD VISUAL ELEMENT CRITERION
+// Cube timer application with GUI
 public class CubeTimerUI extends KeyAdapter implements ActionListener {
     private static final int SCRAMBLE_LEN = 20;
-    private static final String saveLocation = "./data/solveData.txt";
+    private static final String SAVE_LOCATION = "./data/solveData.txt";
+    private static final ImageIcon ICON = new ImageIcon("./data/cube.png");
 
+    private JPanel left;
+    private JPanel right;
     private boolean isTiming;
     private long startTime;
     private ScrambleGenerator scrambler;
@@ -31,25 +34,29 @@ public class CubeTimerUI extends KeyAdapter implements ActionListener {
     private JButton addButton;
     private JButton removeButton;
     private JButton clearButton;
+    private JButton exportButton;
     private JLabel scrambleLabel;
     private DefaultListModel<String> solveListModel; // So we can add/delete solves
     private JList<String> solveListDisplay;
     private JFrame frame;
 
-    // EFFECTS: Contructs a CubeTimerUI
+    // EFFECTS: Constructs a CubeTimerUI
     public CubeTimerUI() {
         solves = new SolveList();
         isTiming = false;
         startTime = 0;
         scrambler = new ScrambleGenerator();
-        jsonReader = new SolveListJsonReader(saveLocation);
-        jsonWriter = new SolveListJsonWriter(saveLocation);
+        jsonReader = new SolveListJsonReader(SAVE_LOCATION);
+        jsonWriter = new SolveListJsonWriter(SAVE_LOCATION);
         scrambleLabel = new JLabel("", SwingConstants.CENTER);
         statisticLabel = new JLabel();
-        mainLabel = new JLabel();
+        mainLabel = new JLabel("<html><h1>Tempus Cube Timer</h1></html>", ICON, SwingConstants.CENTER);
         solveListModel = new DefaultListModel<>();
         solveListDisplay = new JList<>(solveListModel);
         solveListDisplay.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
+
+        left = new JPanel();
+        right = new JPanel();
 
         initializeButtons();
         initializeFrame();
@@ -61,40 +68,44 @@ public class CubeTimerUI extends KeyAdapter implements ActionListener {
     // MODIFIES: this
     // EFFECTS: initializes all required buttons and sets up action listeners
     private void initializeButtons() {
-        timerButton = new JButton("START TIMER");
+        timerButton = new JButton("<html>Press space or <br><b>CLICK HERE</b> <br> to start/stop timer</html>");
         addButton = new JButton("+");
         removeButton = new JButton("-");
         clearButton = new JButton("Clear");
-        mainLabel = new JLabel("<html><h1>Tempus Cube Timer</h1></html>", SwingConstants.CENTER);
+        exportButton = new JButton("Export");
         timerButton.addActionListener(this);
         clearButton.addActionListener(this);
         addButton.addActionListener(this);
         removeButton.addActionListener(this);
+        exportButton.addActionListener(this);
     }
 
     // EFFECTS: constructs main frame, defining initial parameters
     private void initializeFrame() {
         frame = new JFrame("Tempus Cube Timer");
         frame.addKeyListener(this);
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(400,300));
+        frame.setSize(new Dimension(700, 500));
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                writeSaveData();
+                int confirm = JOptionPane.showConfirmDialog(frame,"Save changes?");
+                if (confirm == JOptionPane.YES_OPTION) {
+                    writeSaveData();
+                    System.exit(0);
+                } else if (confirm == JOptionPane.NO_OPTION) {
+                    System.exit(0);
+                }
             }
         });
     }
 
     // REQUIRES: relevant elements are appropriately initialized. Should always occur under normal operations.
-    // EFFECTS: Displays the initial timer window TODO CUT DOWN LINE COUNT
+    // EFFECTS: Displays the initial timer window
     private void setUpWindow() {
         Container pane = frame.getContentPane();
         pane.add(mainLabel, BorderLayout.PAGE_START);
 
-        JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.LINE_AXIS));
-
-        JPanel left = new JPanel();
         left.setLayout(new BoxLayout(left, BoxLayout.PAGE_AXIS));
 
         left.add(new JLabel("<html><h3>Solves:</h3></html>"));
@@ -102,25 +113,20 @@ public class CubeTimerUI extends KeyAdapter implements ActionListener {
         left.add(addButton);
         left.add(removeButton);
         left.add(clearButton);
-        contentPanel.add(left, BorderLayout.LINE_START);
+        left.add(exportButton);
+        pane.add(left, BorderLayout.LINE_START);
         updateSolveList();
 
-        JPanel center = new JPanel();
-        center.add(new JLabel("Press space to"));
-        center.add(timerButton);
-        contentPanel.add(center);
+        pane.add(timerButton, BorderLayout.CENTER);
 
-        JPanel right = new JPanel();
         updateStats();
         right.add(statisticLabel);
-        contentPanel.add(right);
+        pane.add(right, BorderLayout.LINE_END);
 
         updateScramble();
         pane.add(scrambleLabel, BorderLayout.PAGE_END);
 
-        pane.add(contentPanel, BorderLayout.CENTER);
-        frame.pack();
-        frame.setLocationRelativeTo(null); // Center window on screen
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.requestFocus(); // Request focus so keyboard inputs are captured
     }
@@ -140,17 +146,20 @@ public class CubeTimerUI extends KeyAdapter implements ActionListener {
     // EFFECTS: Generates a new scramble and updates scrambleLabel to display it
     private void updateScramble() {
         scrambler.generateScramble(SCRAMBLE_LEN);
-        scrambleLabel.setText("<html><h4>Scramble: " + scrambler.toString() + "</h4></html>");
+        scrambleLabel.setText("<html><h3>Scramble: " + scrambler.toString() + "</h3></html>");
     }
 
     // MODIFIES: this
-    // EFFECTS: if there is a saved SolveList, load it into solves
+    // EFFECTS: if there is a saved SolveList, give user the option to load it into solves
     private void loadSaveData() {
-        try {
-            solves = jsonReader.getSavedData();
-        } catch (IOException e) {
-            // Save not found, that's okay.
-            // It will be created the next time the user saves.
+        int confirm = JOptionPane.showConfirmDialog(frame,"Load previous solves?");
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                solves = jsonReader.getSavedData();
+            } catch (IOException e) {
+                // Save not found, that's okay.
+                // It will be created the next time the user saves.
+            }
         }
     }
 
@@ -162,7 +171,7 @@ public class CubeTimerUI extends KeyAdapter implements ActionListener {
             jsonWriter.writeSolveList(solves);
             jsonWriter.close();
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(frame, "Error writing to " + saveLocation);
+            JOptionPane.showMessageDialog(frame, "Error writing to " + SAVE_LOCATION);
         }
     }
 
@@ -171,6 +180,8 @@ public class CubeTimerUI extends KeyAdapter implements ActionListener {
     private void updateStats() {
         StringBuilder content = new StringBuilder("<html><h3>Statistics:<br>");
         int size = solves.getSolveList().size();
+        content.append("<p>Solves: <b>").append(size).append("</p></b>");
+
         if (size >= 1) {
             content.append("<p>Session mean: <b>");
             content.append(roundTo3Digits(solves.currentSessionMean()));
@@ -201,17 +212,20 @@ public class CubeTimerUI extends KeyAdapter implements ActionListener {
     // EFFECTS: Responds to a user action appropriately
     @Override
     public void actionPerformed(ActionEvent e) {
-        frame.requestFocus(); // Unfocus button so pressing space doesn't click it again
+        frame.requestFocus(); // Un-focus button so pressing space doesn't click it again
 
         switch (e.getActionCommand()) {
             case "+":
-                // TODO Implement
+                addCustomTime();
                 break;
             case "-":
                 deleteSelectedSolve();
                 break;
             case "Clear":
                 clearSolves();
+                break;
+            case "Export":
+                exportSolves();
                 break;
             default:
                 if (!isTiming) {
@@ -220,6 +234,30 @@ public class CubeTimerUI extends KeyAdapter implements ActionListener {
                     stopTimer();
                 }
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Prompts the user to enter a solve time, and adds it to solves if valid
+    private void addCustomTime() {
+        String time = JOptionPane.showInputDialog("Enter Solve Time:");
+        try {
+            double timeDouble = Double.parseDouble(time);
+            if (timeDouble > 0) {
+                solves.add(new Solve(timeDouble));
+                updateStats();
+                updateSolveList();
+            } else {
+                JOptionPane.showMessageDialog(frame,"Times must be positive. You're not that fast!");
+            }
+        } catch (Exception e) { // User didn't enter a double; don't add anything.
+            JOptionPane.showMessageDialog(frame,"Time not added.");
+        }
+    }
+
+    //EFFECTS: Presents the user with a string representation of solves
+    private void exportSolves() {
+        JTextArea textArea = new JTextArea(solves.listLatestSolves(solves.getSolveList().size()));
+        JOptionPane.showMessageDialog(frame, new JScrollPane(textArea));
     }
 
     // MODIFIES: this
@@ -259,7 +297,7 @@ public class CubeTimerUI extends KeyAdapter implements ActionListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: If a solve is selected in the GUI, delete it.
+    // EFFECTS: If a Solve is selected in the GUI, delete it.
     public void deleteSelectedSolve() {
         int index = solveListDisplay.getSelectedIndex();
         if (index != -1) { // Valid selection

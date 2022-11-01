@@ -21,3 +21,14 @@ There exist several cubing timers, but none are perfect in my opinion. I have be
 - As a user, I want to be able to delete a solve from a list of solves, or clear the entire list
 - As a user, I want to be able to save my list of times when I quit the application
 - As a user, I want my previously saved times to be present when I re-open the application
+- As a user, I want to export a string representation of my solves so that I can view them elsewhere
+
+# Instructions for Grader
+- You can generate the first required event related to adding Solves to a SolveList by either:
+  - Starting and stopping the timer by pressing the space key or timer button
+  - Clicking the "+" button to manually add a Solve
+- You can generate the second required event related to adding Solves to a SolveList by clicking the "Export" button
+  - This will present a dialog with a string representation of all Solves in the SolveList
+- You can locate my visual component by looking at the beautiful image at the top of the application window
+- You can save the state of my application by closing the application and selecting "Yes" when prompted
+- You can reload the state of my application by opening the application and selecting "Yes" when prompted
