@@ -46,6 +46,7 @@ public class SolveList {
             output.append(solve.getSolveTime());
             output.append("\n");
         }
+        EventLog.getInstance().logEvent(new Event("Exported solve list."));
         return output.toString().trim();
     }
 
