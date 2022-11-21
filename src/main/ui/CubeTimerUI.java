@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.ScrambleGenerator;
 import model.Solve;
 import model.SolveList;
@@ -92,12 +94,23 @@ public class CubeTimerUI extends KeyAdapter implements ActionListener {
                 int confirm = JOptionPane.showConfirmDialog(frame,"Save changes?");
                 if (confirm == JOptionPane.YES_OPTION) {
                     writeSaveData();
+                    printLog(EventLog.getInstance());
                     System.exit(0);
                 } else if (confirm == JOptionPane.NO_OPTION) {
+                    printLog(EventLog.getInstance());
                     System.exit(0);
                 }
             }
         });
+    }
+
+    // Based on code from AlarmSystem
+    // EFFECTS: Prints the EventLog to the console
+    private void printLog(EventLog el) {
+        for (Event next : el) {
+            System.out.println();
+            System.out.println(next.toString());
+        }
     }
 
     // REQUIRES: relevant elements are appropriately initialized. Should always occur under normal operations.

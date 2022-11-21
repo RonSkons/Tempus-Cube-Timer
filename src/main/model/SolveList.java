@@ -18,12 +18,14 @@ public class SolveList {
     // EFFECTS: clears the list of solves
     public void clear() {
         solveList.clear();
+        EventLog.getInstance().logEvent(new Event("Cleared solve list."));
     }
 
     // MODIFIES: this
     // EFFECTS: adds given solve to the list of solves
     public void add(Solve solve) {
         solveList.add(solve);
+        EventLog.getInstance().logEvent(new Event("Added a solve to the list: " + solve.getSolveTime()));
     }
 
     // REQUIRES: solveList.get(index) exists
@@ -31,6 +33,7 @@ public class SolveList {
     // EFFECTS: removes the Solve at given index from solveList
     public void remove(int index) {
         solveList.remove(index);
+        EventLog.getInstance().logEvent(new Event("Removed solve number " + index + " from the list."));
     }
 
     // REQUIRES: 0 <= n

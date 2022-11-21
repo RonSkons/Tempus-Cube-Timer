@@ -32,3 +32,34 @@ There exist several cubing timers, but none are perfect in my opinion. I have be
 - You can locate my visual component by looking at the beautiful image at the top of the application window
 - You can save the state of my application by closing the application and selecting "Yes" when prompted
 - You can reload the state of my application by opening the application and selecting "Yes" when prompted
+
+# Phase 4, task 2
+Mon Nov 21 13:24:01 PST 2022
+Added a solve to the list: 15.621
+
+Mon Nov 21 13:24:01 PST 2022
+Added a solve to the list: 17.979
+
+Mon Nov 21 13:24:01 PST 2022
+Added a solve to the list: 16.494
+
+Mon Nov 21 13:24:01 PST 2022
+Added a solve to the list: 16.284
+
+Mon Nov 21 13:24:01 PST 2022
+Added a solve to the list: 14.967
+
+Mon Nov 21 13:24:01 PST 2022
+Added a solve to the list: 15.821
+
+Mon Nov 21 13:24:01 PST 2022
+Added a solve to the list: 16.854
+
+Mon Nov 21 13:24:04 PST 2022
+Removed solve number 5 from the list.
+
+Mon Nov 21 13:24:07 PST 2022
+Removed solve number 5 from the list.
+
+Mon Nov 21 13:24:17 PST 2022
+Added a solve to the list: 9.238
