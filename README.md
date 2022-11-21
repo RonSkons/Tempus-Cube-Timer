@@ -33,12 +33,9 @@ There exist several cubing timers, but none are perfect in my opinion. I have be
 - You can save the state of my application by closing the application and selecting "Yes" when prompted
 - You can reload the state of my application by opening the application and selecting "Yes" when prompted
 
-# Phase 4, task 2
+# Phase 4: Task 2
 Mon Nov 21 13:24:01 PST 2022
 Added a solve to the list: 15.621
-
-Mon Nov 21 13:24:01 PST 2022
-Added a solve to the list: 17.979
 
 Mon Nov 21 13:24:01 PST 2022
 Added a solve to the list: 16.494
@@ -59,10 +56,15 @@ Mon Nov 21 13:24:04 PST 2022
 Removed solve number 5 from the list.
 
 Mon Nov 21 13:24:07 PST 2022
-Removed solve number 5 from the list.
+Removed solve number 6 from the list.
 
 Mon Nov 21 13:24:17 PST 2022
 Added a solve to the list: 9.238
 
 Mon Nov 21 13:24:27 PST 2022
 Exported solve list.
+
+# Phase 5: Task 3
+I am overall satisfied with the design of this project.
+If I had more time, I might want to refactor SolveListJsonReader/Writer into more generic JSON-handling classes, and make Solve and SolveList responsible for (un)serializing themselves.
+This would improve cohesion by making sure that my persistence classes are concerned strictly with persistence-related tasks.
