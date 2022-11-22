@@ -68,3 +68,5 @@ Exported solve list.
 I am overall satisfied with the design of this project.
 If I had more time, I might want to refactor SolveListJsonReader/Writer into more generic JSON-handling classes, and make Solve and SolveList responsible for (un)serializing themselves.
 This would improve cohesion by making sure that my persistence classes are concerned strictly with persistence-related tasks.
+
+Also, if I had more time I would refactor many of my methods to throw exceptions instead of having REQUIRES clauses.
