@@ -3,12 +3,14 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SolveListTest {
     public SolveList solveList;
     public Solve s1, s2, s3, fastSolve, slowSolve;
-
+    public EventLog el = EventLog.getInstance();
     @BeforeEach
     public void setup() {
         solveList = new SolveList();
@@ -17,6 +19,7 @@ public class SolveListTest {
         s3 = new Solve(32.89, "F2 U D L2 B U' L");
         fastSolve = new Solve(3.141);
         slowSolve = new Solve(40.983);
+        el.clear();
     }
 
     @Test
@@ -29,6 +32,11 @@ public class SolveListTest {
         solveList.add(s1);
         assertEquals(s1, solveList.getSolveList().get(0));
         assertEquals(1, solveList.getSolveList().size());
+
+        Iterator<Event> iterator = el.iterator();
+        iterator.next();
+        assertEquals("Added a solve to the list: 8.141",
+                iterator.next().getDescription());
     }
 
     @Test
@@ -40,6 +48,15 @@ public class SolveListTest {
         assertEquals(s2, solveList.getSolveList().get(1));
         assertEquals(s3, solveList.getSolveList().get(2));
         assertEquals(3, solveList.getSolveList().size());
+
+        Iterator<Event> iterator = el.iterator();
+        iterator.next();
+        assertEquals("Added a solve to the list: 8.141",
+                iterator.next().getDescription());
+        assertEquals("Added a solve to the list: 12.891",
+                iterator.next().getDescription());
+        assertEquals("Added a solve to the list: 32.89",
+                iterator.next().getDescription());
     }
 
     @Test
@@ -49,6 +66,14 @@ public class SolveListTest {
         solveList.add(s3);
         solveList.clear();
         assertEquals(0, solveList.getSolveList().size());
+
+        Iterator<Event> iterator = el.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        assertEquals("Cleared solve list.",
+                iterator.next().getDescription());
     }
 
     @Test
@@ -56,6 +81,12 @@ public class SolveListTest {
         solveList.add(s1);
         solveList.remove(0);
         assertEquals(0, solveList.getSolveList().size());
+
+        Iterator<Event> iterator = el.iterator();
+        iterator.next();
+        iterator.next();
+        assertEquals("Removed solve number 0 from the list.",
+                iterator.next().getDescription());
     }
 
     @Test
@@ -67,6 +98,16 @@ public class SolveListTest {
         solveList.remove(1);
         assertEquals(s1, solveList.getSolveList().get(0));
         assertEquals(1, solveList.getSolveList().size());
+
+        Iterator<Event> iterator = el.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        assertEquals("Removed solve number 1 from the list.",
+                iterator.next().getDescription());
+        assertEquals("Removed solve number 1 from the list.",
+                iterator.next().getDescription());
     }
 
     @Test
@@ -78,11 +119,24 @@ public class SolveListTest {
         assertEquals(s1, solveList.getSolveList().get(0));
         assertEquals(s3, solveList.getSolveList().get(1));
         assertEquals(2, solveList.getSolveList().size());
+
+        Iterator<Event> iterator = el.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        assertEquals("Removed solve number 1 from the list.",
+                iterator.next().getDescription());
     }
 
     @Test
     public void testListLatestSolvesEmpty() {
         assertEquals("", solveList.listLatestSolves(5));
+
+        Iterator<Event> iterator = el.iterator();
+        iterator.next();
+        assertEquals("Exported solve list.",
+                iterator.next().getDescription());
     }
 
     @Test
@@ -93,6 +147,14 @@ public class SolveListTest {
         assertEquals("[3] 32.89\n" +
                 "[2] 12.891\n" +
                 "[1] 8.141", solveList.listLatestSolves(3));
+
+        Iterator<Event> iterator = el.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        assertEquals("Exported solve list.",
+                iterator.next().getDescription());
     }
 
     @Test
@@ -102,6 +164,14 @@ public class SolveListTest {
         solveList.add(s3);
         assertEquals("[3] 32.89\n" +
                 "[2] 12.891", solveList.listLatestSolves(2));
+
+        Iterator<Event> iterator = el.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        assertEquals("Exported solve list.",
+                iterator.next().getDescription());
     }
 
     @Test
@@ -112,6 +182,14 @@ public class SolveListTest {
         assertEquals("[3] 32.89\n" +
                 "[2] 12.891\n" +
                 "[1] 8.141", solveList.listLatestSolves(2000));
+
+        Iterator<Event> iterator = el.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+        assertEquals("Exported solve list.",
+                iterator.next().getDescription());
     }
 
     @Test
