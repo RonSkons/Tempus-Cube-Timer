@@ -3,6 +3,5 @@ _Tempus_ is a speedcubing timer programmed in Java. It can be used to time Rubik
 After a solve is complete, the solve time will be saved so that it persists after the program is terminated. Times can also be manually added and removed.
 
 &nbsp;
-&nbsp;
-&nbsp;
+---
 ![Screenshot](https://raw.githubusercontent.com/RonSkons/Tempus-Cube-Timer/main/Screenshot.png)
