@@ -23,4 +23,5 @@ public class SolveTest {
         assertEquals(12.345, st2.getSolveTime());
         assertEquals("R2 L2 B2 F2 D2 U2", st2.getScrambleString());
     }
+
 }

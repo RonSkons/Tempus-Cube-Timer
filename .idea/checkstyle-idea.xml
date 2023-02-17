@@ -5,7 +5,7 @@
     <scanScope>JavaOnly</scanScope>
     <option name="thirdPartyClasspath" />
     <option name="activeLocationIds">
-      <option value="47e8b8d8-7595-480f-aa79-69c3e97537d6" />
+      <option value="bundled-google-checks" />
     </option>
     <option name="locations">
       <list>

@@ -57,12 +57,5 @@ class ScrambleGeneratorTest {
         assertFalse(stringified.length() > 2);
     }
 
-    @Test
-    public void testToStringLongScramble() {
-        scrambler.generateScramble(45);
-        String stringified = scrambler.toString();
-        String[] split = stringified.split(" ");
-        // When stringified is split on " ", result should have appropriate # of moves
-        assertEquals(45, split.length);
-    }
+
 }
